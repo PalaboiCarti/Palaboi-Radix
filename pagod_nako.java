@@ -1,21 +1,7 @@
 import java.util.Scanner;
 
 public class RadixTest {
-    public static double toDecimal(String inputNumber, int base) {
-        String[] parts = inputNumber.split("\\.");
-        double integerPart = Integer.parseInt(parts[0], base); 
-        double fractionalPart = 0.0;
-
-        if (parts.length > 1) {
-            for (int i = 0; i < parts[1].length(); i++) {
-                int digit = Character.digit(parts[1].charAt(i), base);
-                fractionalPart += digit / Math.pow(base, i + 1); 
-            }
-        }
-        return integerPart + fractionalPart; 
-    }
-
-    public static String fromDecimal(double inputNumber, int base) {
+    public static String radixConverter(double inputNumber, int base) {
         int integerPart = (int) inputNumber; 
         double fractionalPart = inputNumber - integerPart; 
         StringBuilder result = new StringBuilder();
@@ -62,19 +48,12 @@ public class RadixTest {
             }
 
             System.out.print("Please enter a NUMBER in BASE " + base + ": ");
-            String inputNumber = scan.nextLine();
-
-            double decimalNumber;
-            try {
-                decimalNumber = toDecimal(inputNumber, base);
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR! Invalid NUMBER for the BASE " + base + ". Please retry...");
-                continue;
-            }
+            String inputNumber = scan.nextLine();   
+            double number = Double.parseDouble(inputNumber);  
 
             System.out.println("SUCCESS! Here's the RADIX Conversion: ");
             for (int radix = 2; radix <= 16; radix++) {
-                String convertedNumber = fromDecimal(decimalNumber, radix);
+                String convertedNumber = radixConverter(number, radix);
                 System.out.println("Base " + radix + ": " + convertedNumber);
             }
         }
